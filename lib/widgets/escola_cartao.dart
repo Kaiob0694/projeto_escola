@@ -1,25 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:projeto_escola/core/escola_ds.dart';
 
-/// Cartão branco com cantos arredondados e sombra suave do Design System.
-/// Usado como contêiner de conteúdo em todas as telas.
+/// Cartão branco com cantos arredondados e sombra, do Design System.
 class EscolaCartao extends StatelessWidget {
   const EscolaCartao({
     super.key,
     required this.child,
-    this.padding = const EdgeInsets.all(EscolaDS.s16),
+    this.padding = const EdgeInsets.all(20),
   });
 
-  // Conteúdo que será exibido dentro do cartão.
   final Widget child;
-
-  // Espaço interno entre a borda do cartão e o conteúdo.
-  final EdgeInsetsGeometry padding;
+  final EdgeInsets padding;
 
   @override
   Widget build(BuildContext context) {
+    // O Container recebe a decoração pronta e exibe qualquer widget em child.
     return Container(
-      // Ocupa toda a largura disponível, como os cartões das telas.
       width: double.infinity,
       padding: padding,
       decoration: EscolaDS.cartao,

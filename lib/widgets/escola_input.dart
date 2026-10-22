@@ -1,35 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:projeto_escola/core/escola_ds.dart';
 
-/// Campo de texto padrão do projeto: rótulo acima e caixa com borda
-/// arredondada do Design System.
+/// Campo de texto reutilizável com rótulo e estados padronizados.
 class EscolaInput extends StatelessWidget {
   const EscolaInput({
     super.key,
     required this.rotulo,
     required this.controller,
-    this.teclado,
     this.ocultarTexto = false,
     this.habilitado = true,
+    this.teclado = TextInputType.text,
     this.aoMudar,
   });
 
-  // Texto exibido acima do campo.
   final String rotulo;
   final TextEditingController controller;
-
-  // Tipo de teclado: e-mail, número, telefone etc. Null usa o teclado padrão.
-  final TextInputType? teclado;
-
-  // Esconde o texto digitado, usado em campos de senha.
   final bool ocultarTexto;
-
-  // Quando false, o campo aparece bloqueado (ex.: CPF ao editar).
   final bool habilitado;
-
-  // Chamado a cada alteração do texto. O ? permite não receber nada.
+  final TextInputType teclado;
   final ValueChanged<String>? aoMudar;
 
+  // Método auxiliar para criar todas as bordas com o mesmo formato.
   OutlineInputBorder _borda(Color cor) {
     return OutlineInputBorder(
       borderRadius: BorderRadius.circular(EscolaDS.raioCampo),
@@ -43,25 +34,25 @@ class EscolaInput extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(rotulo, style: EscolaDS.rotulo),
-        const SizedBox(height: EscolaDS.s8),
+        const SizedBox(height: 5),
         TextField(
+          // O controller permite ler e alterar o conteúdo do campo.
           controller: controller,
-          keyboardType: teclado,
+          // Usado em senhas para substituir os caracteres por pontos.
           obscureText: ocultarTexto,
           enabled: habilitado,
+          keyboardType: teclado,
           onChanged: aoMudar,
-          style: EscolaDS.rotulo,
+          style: EscolaDS.corpo,
+          cursorColor: EscolaDS.azul,
           decoration: InputDecoration(
             filled: true,
-            // Campo bloqueado fica cinza para indicar que não pode ser editado.
-            fillColor: habilitado ? EscolaDS.campo : EscolaDS.desabilitado,
-            contentPadding: const EdgeInsets.symmetric(
-              horizontal: EscolaDS.s16,
-              vertical: 14,
-            ),
-            border: _borda(EscolaDS.borda),
+            fillColor: habilitado ? EscolaDS.campo : EscolaDS.fundo,
+            isDense: true,
+            contentPadding: const EdgeInsets.all(12),
             enabledBorder: _borda(EscolaDS.borda),
             disabledBorder: _borda(EscolaDS.borda),
+            // A borda azul informa visualmente que o campo está com foco.
             focusedBorder: _borda(EscolaDS.azul),
           ),
         ),
