@@ -1,38 +1,71 @@
-import 'package:projeto_escola/models/aluno.dart';
+import 'package:flutter/material.dart';
+import 'package:projeto_escola/core/escola_ds.dart';
 
-class AlunoController {
-  final List<Aluno> alunos = [
-    Aluno(2, 'Maria Clara', '222.222.222-22', '(11)97777-2222'),
-    Aluno(3, 'André Silva', '123.456.789-09', '123456789'),
-    Aluno(4, 'Tainá Couto', '123.456.098-09', '(12)345678654'),
-  ];
+/// Campo de texto padrão do projeto: rótulo acima e caixa com borda
+/// arredondada do Design System.
+class EscolaInput extends StatelessWidget {
+  const EscolaInput({
+    super.key,
+    required this.rotulo,
+    required this.controller,
+    this.teclado,
+    this.ocultarTexto = false,
+    this.habilitado = true,
+    this.aoMudar,
+  });
 
-  List<Aluno> listar() {
-    return alunos;
+  // Texto exibido acima do campo.
+  final String rotulo;
+  final TextEditingController controller;
+
+  // Tipo de teclado: e-mail, número, telefone etc. Null usa o teclado padrão.
+  final TextInputType? teclado;
+
+  // Esconde o texto digitado, usado em campos de senha.
+  final bool ocultarTexto;
+
+  // Quando false, o campo aparece bloqueado (ex.: CPF ao editar).
+  final bool habilitado;
+
+  // Chamado a cada alteração do texto. O ? permite não receber nada.
+  final ValueChanged<String>? aoMudar;
+
+  OutlineInputBorder _borda(Color cor) {
+    return OutlineInputBorder(
+      borderRadius: BorderRadius.circular(EscolaDS.raioCampo),
+      borderSide: BorderSide(color: cor),
+    );
   }
 
-  bool cadastrar(String nome, String cpf, String telefone) {
-    for (final aluno in alunos) {
-      if (aluno.cpf == cpf) {
-        return false;
-      }
-    }
-
-    int id = 1;
-    if (alunos.isNotEmpty) {
-      id = alunos.last.id + 1;
-    }
-
-    alunos.add(Aluno(id, nome, cpf, telefone));
-    return true;
-  }
-
-  void editar(Aluno aluno, String nome, String telefone) {
-    aluno.nome = nome;
-    aluno.telefone = telefone;
-  }
-
-  void excluir(Aluno aluno) {
-    alunos.remove(aluno);
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(rotulo, style: EscolaDS.rotulo),
+        const SizedBox(height: EscolaDS.s8),
+        TextField(
+          controller: controller,
+          keyboardType: teclado,
+          obscureText: ocultarTexto,
+          enabled: habilitado,
+          onChanged: aoMudar,
+          style: EscolaDS.rotulo,
+          decoration: InputDecoration(
+            filled: true,
+            // Campo bloqueado fica cinza para indicar que não pode ser editado.
+            fillColor: habilitado ? EscolaDS.campo : EscolaDS.desabilitado,
+            contentPadding: const EdgeInsets.symmetric(
+              horizontal: EscolaDS.s16,
+              vertical: 14,
+            ),
+            border: _borda(EscolaDS.borda),
+            enabledBorder: _borda(EscolaDS.borda),
+            disabledBorder: _borda(EscolaDS.borda),
+            focusedBorder: _borda(EscolaDS.azul),
+          ),
+        ),
+      ],
+    );
   }
 }

@@ -1,38 +1,29 @@
-import 'package:projeto_escola/models/aluno.dart';
+import 'package:flutter/material.dart';
+import 'package:projeto_escola/core/escola_ds.dart';
 
-class AlunoController {
-  final List<Aluno> alunos = [
-    Aluno(2, 'Maria Clara', '222.222.222-22', '(11)97777-2222'),
-    Aluno(3, 'André Silva', '123.456.789-09', '123456789'),
-    Aluno(4, 'Tainá Couto', '123.456.098-09', '(12)345678654'),
-  ];
+/// Cartão branco com cantos arredondados e sombra suave do Design System.
+/// Usado como contêiner de conteúdo em todas as telas.
+class EscolaCartao extends StatelessWidget {
+  const EscolaCartao({
+    super.key,
+    required this.child,
+    this.padding = const EdgeInsets.all(EscolaDS.s16),
+  });
 
-  List<Aluno> listar() {
-    return alunos;
-  }
+  // Conteúdo que será exibido dentro do cartão.
+  final Widget child;
 
-  bool cadastrar(String nome, String cpf, String telefone) {
-    for (final aluno in alunos) {
-      if (aluno.cpf == cpf) {
-        return false;
-      }
-    }
+  // Espaço interno entre a borda do cartão e o conteúdo.
+  final EdgeInsetsGeometry padding;
 
-    int id = 1;
-    if (alunos.isNotEmpty) {
-      id = alunos.last.id + 1;
-    }
-
-    alunos.add(Aluno(id, nome, cpf, telefone));
-    return true;
-  }
-
-  void editar(Aluno aluno, String nome, String telefone) {
-    aluno.nome = nome;
-    aluno.telefone = telefone;
-  }
-
-  void excluir(Aluno aluno) {
-    alunos.remove(aluno);
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      // Ocupa toda a largura disponível, como os cartões das telas.
+      width: double.infinity,
+      padding: padding,
+      decoration: EscolaDS.cartao,
+      child: child,
+    );
   }
 }
