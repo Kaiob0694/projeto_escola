@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:projeto_escola/controllers/aluno_controller.dart';
+import 'package:projeto_escola/controllers/matricula_controller.dart';
 import 'package:projeto_escola/core/escola_ds.dart';
 import 'package:projeto_escola/models/aluno.dart';
 
@@ -46,6 +47,8 @@ class _TelaAlunosState extends State<TelaAlunos> {
           ),
           TextButton(
             onPressed: () {
+              // As matrículas do aluno saem junto com ele.
+              MatriculaController().removerPorAluno(aluno);
               controller.excluir(aluno);
               setState(() {});
               Navigator.pop(dialogContext);

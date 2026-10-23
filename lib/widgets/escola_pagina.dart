@@ -2,8 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:projeto_escola/core/escola_ds.dart';
 
 import '../views/tela_alunos.dart';
+import '../views/tela_disciplinas.dart';
 import '../views/tela_home.dart';
 import '../views/tela_login.dart';
+import '../views/tela_matriculas.dart';
+import '../views/tela_professores.dart';
+import '../views/tela_turmas.dart';
 import 'escola_rodape.dart';
 
 /// Estrutura comum das telas internas: barra azul, menu lateral e rodapé.
@@ -23,13 +27,7 @@ class EscolaPagina extends StatelessWidget {
   final bool comMenu;
 
   // Itens do menu que ainda não têm tela.
-  static const _outros = [
-    'Professores',
-    'Turmas',
-    'Disciplinas',
-    'Matrículas',
-    'Consultas',
-  ];
+  static const _outros = ['Consultas'];
 
   void _ir(BuildContext context, Widget tela) {
     // Substitui a tela atual para não acumular páginas ao usar o menu.
@@ -61,6 +59,22 @@ class EscolaPagina extends StatelessWidget {
           ListTile(
             title: const Text('Alunos'),
             onTap: () => _ir(context, const TelaAlunos()),
+          ),
+          ListTile(
+            title: const Text('Professores'),
+            onTap: () => _ir(context, const TelaProfessores()),
+          ),
+          ListTile(
+            title: const Text('Turmas'),
+            onTap: () => _ir(context, const TelaTurmas()),
+          ),
+          ListTile(
+            title: const Text('Disciplinas'),
+            onTap: () => _ir(context, const TelaDisciplinas()),
+          ),
+          ListTile(
+            title: const Text('Matrículas'),
+            onTap: () => _ir(context, const TelaMatriculas()),
           ),
           for (final item in _outros)
             ListTile(title: Text(item), onTap: () => Navigator.pop(context)),
